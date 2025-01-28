@@ -5,6 +5,7 @@
  */
 
 #include "main.h"
+#include <stdio.h>
 
 int *
 add_1_svc(numbers *argp, struct svc_req *rqstp)

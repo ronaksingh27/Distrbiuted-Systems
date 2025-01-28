@@ -5,25 +5,24 @@
  */
 
 #include "main.h"
+#include<stdio.h>
+#include<stdlib.h>
 
 
 void
-add_prog_1(char* host,int num1 , int num2)
-char *host;
+add_prog_1( char* host , int num1 , int num2 )
 {
 	CLIENT *clnt;
 	int  *result_1;
 	numbers  add_1_arg;
+
+	add_1_arg.a = num1;
+	add_1_arg.b = num2;
 	clnt = clnt_create(host, ADD_PROG, ADD_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror(host);
 		exit(1);
 	}
-
-	// Set the input arguments
-    add_1_arg.a = num1;
-    add_1_arg.b = num2;
-
 	result_1 = add_1(&add_1_arg, clnt);
 	if (result_1 == NULL) {
 		clnt_perror(clnt, "call failed:");
@@ -32,24 +31,17 @@ char *host;
 }
 
 
-int main(int argc, char *argv)
+main( int argc, char* argv[] )
 {
 	char *host;
 	int num1,num2;
 
-	// Check command-line arguments
-    if (argc < 4) {
-        printf("Usage: %s server_host num1 num2\n", argv[0]);
-        exit(1);
-    }
-
-	//parse arguemnts
+	if(argc < 2) {
+		printf("usage: %s server_host\n", argv[0]);
+		exit(1);
+	}
 	host = argv[1];
-	num1 = atoi(argv[2]);
-    num2 = atoi(argv[3]);
-
-	//call the client function
-	add_prog_1( host, num1 , num2);
-
-	return 0;
+	num1 = argv[2];
+	num2 = argv[3];
+	add_prog_1( host , num1, num2 );
 }
