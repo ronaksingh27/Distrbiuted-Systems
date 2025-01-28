@@ -6,7 +6,9 @@
 #include "main.h"
 
 bool_t
-xdr_numbers(XDR *xdrs, numbers *objp)
+xdr_numbers(xdrs, objp)
+	XDR *xdrs;
+	numbers *objp;
 {
 
 	if (!xdr_int(xdrs, &objp->a))

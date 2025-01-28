@@ -8,15 +8,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <rpc/pmap_clnt.h>
-#include <string.h>
 #include <netdb.h>
 #include <signal.h>
 #include <sys/ttycom.h>
-#ifdef __cplusplus
-#include <sysent.h>
-#endif /* __cplusplus */
 #include <memory.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -36,7 +30,8 @@ static int _rpcfdtype;		/* Whether Stream or Datagram ? */
 static int _rpcsvcdirty;	/* Still serving ? */
 
 static
-void _msgout(char* msg)
+void _msgout(msg)
+	char *msg;
 {
 #ifdef RPC_SVC_FG
 	if (_rpcpmstart)
@@ -47,8 +42,6 @@ void _msgout(char* msg)
 	syslog(LOG_ERR, "%s", msg);
 #endif
 }
-
-static void closedown(void);
 
 static void
 closedown()
@@ -72,17 +65,17 @@ closedown()
 	(void) alarm(_RPCSVC_CLOSEDOWN);
 }
 
-static void add_prog_1(struct svc_req *rqstp, SVCXPRT *transp);
-
 static void
-add_prog_1(struct svc_req *rqstp, SVCXPRT *transp)
+add_prog_1(rqstp, transp)
+	struct svc_req *rqstp;
+	SVCXPRT *transp;
 {
 	union {
 		numbers add_1_arg;
 	} argument;
 	char *result;
-	xdrproc_t xdr_argument, xdr_result;
-	char *(*local)(char *, struct svc_req *);
+	bool_t (*xdr_argument)(), (*xdr_result)();
+	char *(*local)();
 
 	_rpcsvcdirty = 1;
 	switch (rqstp->rq_proc) {
@@ -92,9 +85,9 @@ add_prog_1(struct svc_req *rqstp, SVCXPRT *transp)
 		return;
 
 	case add:
-		xdr_argument = (xdrproc_t) xdr_numbers;
-		xdr_result = (xdrproc_t) xdr_int;
-		local = (char *(*)(char *, struct svc_req *)) add_1_svc;
+		xdr_argument = xdr_numbers;
+		xdr_result = xdr_int;
+		local = (char *(*)()) add_1_svc;
 		break;
 
 	default:
@@ -108,7 +101,7 @@ add_prog_1(struct svc_req *rqstp, SVCXPRT *transp)
 		_rpcsvcdirty = 0;
 		return;
 	}
-	result = (*local)((char *)&argument, rqstp);
+	result = (*local)(&argument, rqstp);
 	if (result != NULL && !svc_sendreply(transp, (xdrproc_t) xdr_result, result)) {
 		svcerr_systemerr(transp);
 	}
@@ -121,10 +114,11 @@ add_prog_1(struct svc_req *rqstp, SVCXPRT *transp)
 }
 
 
-int main( int argc, char* argv[] );
 
 int
-main( int argc, char* argv[] )
+main(argc, argv)
+int argc;
+char *argv[];
 {
 	SVCXPRT *transp = NULL;
 	int sock;
@@ -209,7 +203,7 @@ main( int argc, char* argv[] )
 		exit(1);
 	}
 	if (_rpcpmstart) {
-		(void) signal(SIGALRM, (SIG_PF) closedown);
+		(void) signal(SIGALRM, (void(*)()) closedown);
 		(void) alarm(_RPCSVC_CLOSEDOWN);
 	}
 	svc_run();
