@@ -8,11 +8,14 @@
 
 
 void
-add_prog_1(char *host)
+add_prog_1(char *host , int num1 ,  int num2)
 {
 	CLIENT *clnt;
 	int  *result_1;
 	numbers  add_1_arg;
+
+	add_1_arg.a = num1;
+	add_1_arg.b = num2;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, ADD_PROG, ADD_VERS, "udp");
@@ -36,12 +39,15 @@ int
 main (int argc, char *argv[])
 {
 	char *host;
+	int num1,num2;
 
 	if (argc < 2) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
-	add_prog_1 (host);
+	num1 = argv[2];
+	num2 = argv[3];
+	add_prog_1 (host,num1,num2);
 exit (0);
 }
