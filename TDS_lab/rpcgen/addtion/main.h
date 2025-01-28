@@ -31,7 +31,7 @@ bool_t xdr_numbers();
 #ifdef __cplusplus
 #define add ((rpc_uint)1)
 extern "C" int * add_1(numbers *, CLIENT *);
-extern "C" int * add_1_svc(numbers *);
+extern "C" int * add_1_svc(numbers *, struct svc_req *);
 
 #elif __STDC__
 #define add ((rpc_uint)1)

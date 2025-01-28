@@ -6,8 +6,8 @@
 
 #include "main.h"
 
-int *add_1_svc(argp)
-	numbers *argp;
+int *
+add_1_svc(numbers *argp, struct svc_req *rqstp)
 {
 
 	static int  result;
