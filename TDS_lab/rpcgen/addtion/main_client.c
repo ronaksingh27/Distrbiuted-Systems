@@ -5,8 +5,9 @@
  */
 
 #include "main.h"
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <rpc/rpc.h>
 void
 add_prog_1(char *host , int num1 ,  int num2)
 {
@@ -30,6 +31,8 @@ add_prog_1(char *host , int num1 ,  int num2)
 		clnt_perror (clnt, "call failed");
 	}
 #ifndef	DEBUG
+
+	printf("result = %d\n",*result_1);
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
 }
