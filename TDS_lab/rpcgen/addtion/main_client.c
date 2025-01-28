@@ -46,8 +46,8 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	num1 = argv[2];
-	num2 = argv[3];
+	num1 = atoi(argv[2]);
+	num2 = atoi(argv[3]);
 	add_prog_1 (host,num1,num2);
 exit (0);
 }
