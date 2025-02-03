@@ -8,34 +8,34 @@
 
 
 void
-crud_prog_1(char *host)
+string_ops_prog_1(char *host)
 {
 	CLIENT *clnt;
-	FileOperation  *result_1;
-	FileOperation  createfile_1_arg;
-	FileOperation  *result_2;
-	FileOperation  readfile_1_arg;
-	FileOperation  *result_3;
-	FileOperation  deletefile_1_arg;
+	char * *result_1;
+	char * reverse_string_1_arg;
+	char * *result_2;
+	char * to_uppercase_1_arg;
+	bool_t  *result_3;
+	char * is_palindrome_1_arg;
 
 #ifndef	DEBUG
-	clnt = clnt_create (host, CRUD_PROG, CRUD_VERS, "udp");
+	clnt = clnt_create (host, STRING_OPS_PROG, STRING_OPS_VERS, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	result_1 = createfile_1(&createfile_1_arg, clnt);
-	if (result_1 == (FileOperation *) NULL) {
+	result_1 = reverse_string_1(&reverse_string_1_arg, clnt);
+	if (result_1 == (char **) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	result_2 = readfile_1(&readfile_1_arg, clnt);
-	if (result_2 == (FileOperation *) NULL) {
+	result_2 = to_uppercase_1(&to_uppercase_1_arg, clnt);
+	if (result_2 == (char **) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	result_3 = deletefile_1(&deletefile_1_arg, clnt);
-	if (result_3 == (FileOperation *) NULL) {
+	result_3 = is_palindrome_1(&is_palindrome_1_arg, clnt);
+	if (result_3 == (bool_t *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 #ifndef	DEBUG
@@ -54,6 +54,6 @@ main (int argc, char *argv[])
 		exit (1);
 	}
 	host = argv[1];
-	crud_prog_1 (host);
+	string_ops_prog_1 (host);
 exit (0);
 }

@@ -6,10 +6,10 @@
 
 #include "main.h"
 
-FileOperation *
-createfile_1_svc(FileOperation *argp, struct svc_req *rqstp)
+char **
+reverse_string_1_svc(char **argp, struct svc_req *rqstp)
 {
-	static FileOperation  result;
+	static char * result;
 
 	/*
 	 * insert server code here
@@ -18,10 +18,10 @@ createfile_1_svc(FileOperation *argp, struct svc_req *rqstp)
 	return &result;
 }
 
-FileOperation *
-readfile_1_svc(FileOperation *argp, struct svc_req *rqstp)
+char **
+to_uppercase_1_svc(char **argp, struct svc_req *rqstp)
 {
-	static FileOperation  result;
+	static char * result;
 
 	/*
 	 * insert server code here
@@ -30,10 +30,10 @@ readfile_1_svc(FileOperation *argp, struct svc_req *rqstp)
 	return &result;
 }
 
-FileOperation *
-deletefile_1_svc(FileOperation *argp, struct svc_req *rqstp)
+bool_t *
+is_palindrome_1_svc(char **argp, struct svc_req *rqstp)
 {
-	static FileOperation  result;
+	static bool_t  result;
 
 	/*
 	 * insert server code here
