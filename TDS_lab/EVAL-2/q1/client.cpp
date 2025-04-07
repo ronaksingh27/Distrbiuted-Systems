@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT 8081
+#define PORT 8082
 #define BUFFER_SIZE 1024
 
 int main() {

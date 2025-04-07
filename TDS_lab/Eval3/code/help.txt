@@ -1,0 +1,2 @@
+lsof -i :1099
+kill -9 <PID>
